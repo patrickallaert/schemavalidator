@@ -7,7 +7,7 @@ reports errors found.
 
 ## Important note:
 
-The schema file is in *alpha* stage!
+The schema file is in **alpha** stage!
 
 ## Usage
 
