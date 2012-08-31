@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<software>
+    <metadata>
+        <name>schemavalidator</name>
+        <version>0.1</version>
+        <copyright>Copyright (C) 1999-2012 eZ Systems AS.</copyright>
+        <license>GPL</license>
+        <info_url>http://github.com/patrickallaert/schemavalidator</info_url>
+    </metadata>
+</software>
