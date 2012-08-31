@@ -32,7 +32,7 @@ $script->initialize();
 
 $schema = file_get_contents(
     $options["live"] ?
-        "https://raw.github.com/gist/aa8a1ab1666d7d387039/ezxml.xsd" :
+        "https://raw.github.com/patrickallaert/schemavalidator/master/schemas/ezxml.xsd" :
         ( $options["schema"] ?: ( __DIR__ . "/../../schemas/ezxml.xsd" ) )
 );
 
