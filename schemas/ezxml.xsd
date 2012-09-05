@@ -4,20 +4,14 @@
   <xs:element name="section">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="paragraph"/>
-        <xs:element ref="section"/>
-        <xs:element ref="header"/>
+        <xs:group ref="blockElements"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
   <xs:element name="header">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="custom"/>
-        <xs:element ref="strong"/>
-        <xs:element ref="emphasize"/>
-        <xs:element ref="link"/>
-        <xs:element ref="anchor"/>
+        <xs:group ref="commonInlineElements"/>
       </xs:choice>
       <xs:attributeGroup ref="align"/>
       <xs:attribute name="anchor_name" type="xs:string"/>
@@ -26,47 +20,15 @@
       <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="strong">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="custom"/>
-        <xs:element ref="emphasize"/>
-        <xs:element ref="link"/>
-        <xs:element ref="strong"/>
-        <xs:element ref="embed"/>
-        <xs:element ref="embed-inline"/>
-        <xs:element ref="anchor"/>
-      </xs:choice>
-      <xs:attributeGroup ref="class"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="emphasize">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="custom"/>
-        <xs:element ref="emphasize"/>
-        <xs:element ref="link"/>
-        <xs:element ref="strong"/>
-        <xs:element ref="embed"/>
-        <xs:element ref="embed-inline"/>
-        <xs:element ref="anchor"/>
-      </xs:choice>
-      <xs:attributeGroup ref="class"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
+  <xs:element name="strong" type="text-decoration"/>
+  <xs:element name="emphasize" type="text-decoration"/>
   <xs:element name="paragraph">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="custom"/>
-        <xs:element ref="emphasize"/>
+        <xs:group ref="commonInlineElements"/>
         <xs:element ref="embed"/>
         <xs:element ref="embed-inline"/>
-        <xs:element ref="strong"/>
-        <xs:element ref="link"/>
         <xs:element ref="table"/>
-        <xs:element ref="anchor"/>
         <xs:element ref="line"/>
         <xs:element ref="literal"/>
         <xs:element ref="ol"/>
@@ -86,14 +48,10 @@
   <xs:element name="line">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="custom"/>
-        <xs:element ref="emphasize"/>
-        <xs:element ref="link"/>
-        <xs:element ref="strong"/>
+        <xs:group ref="commonInlineElements"/>
         <xs:element ref="embed"/>
         <xs:element ref="embed-inline"/>
         <xs:element ref="literal"/>
-        <xs:element ref="anchor"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -119,13 +77,8 @@
   <xs:element name="custom">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="custom"/>
-        <xs:element ref="section"/>
-        <xs:element ref="header"/>
-        <xs:element ref="link"/>
-        <xs:element ref="strong"/>
-        <xs:element ref="emphasize"/>
-        <xs:element ref="paragraph"/>
+        <xs:group ref="commonInlineElements"/>
+        <xs:group ref="blockElements"/>
       </xs:choice>
       <xs:attributeGroup ref="align"/>
       <xs:attribute name="name" use="required" type="xs:string"/>
@@ -135,11 +88,11 @@
   <xs:element name="link">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="emphasize"/>
+        <xs:element ref="custom"/>
         <xs:element ref="strong"/>
+        <xs:element ref="emphasize"/>
         <xs:element ref="embed"/>
         <xs:element ref="embed-inline"/>
-        <xs:element ref="custom"/>
       </xs:choice>
       <xs:attribute name="anchor_name"/>
       <xs:attributeGroup ref="class"/>
@@ -155,37 +108,10 @@
       <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="embed">
-    <xs:complexType>
-      <xs:attributeGroup ref="align"/>
-      <xs:attributeGroup ref="class"/>
-      <xs:attribute name="node_id" type="xs:integer"/>
-      <xs:attribute name="object_id" type="xs:integer"/>
-      <xs:attribute name="object_remote_id" type="xs:string"/>
-      <xs:attribute name="show_path"/>
-      <xs:attribute name="size" type="xs:string"/>
-      <xs:attributeGroup ref="target"/>
-      <xs:attribute name="view" type="xs:string"/>
-      <xs:attributeGroup ref="xhtml:id"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-  <!-- TODO: combine with "embed" -->
-  <xs:element name="embed-inline">
-    <xs:complexType>
-      <xs:attributeGroup ref="align"/>
-      <xs:attributeGroup ref="class"/>
-      <xs:attribute name="node_id" type="xs:integer"/>
-      <xs:attribute name="object_id" type="xs:integer"/>
-      <xs:attribute name="object_remote_id" type="xs:string"/>
-      <xs:attribute name="show_path"/>
-      <xs:attribute name="size" type="xs:string"/>
-      <xs:attributeGroup ref="target"/>
-      <xs:attribute name="view" type="xs:string"/>
-      <xs:attributeGroup ref="xhtml:id"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
+
+  <xs:element name="embed" type="embed"/>
+
+  <xs:element name="embed-inline" type="embed"/>
 
   <!-- Table elements -->
   <xs:element name="table">
@@ -216,7 +142,7 @@
 
   <xs:element name="td" type="cell"/>
 
-  <!-- Custome types -->
+  <!-- Custom types -->
   <xs:complexType name="cell" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element ref="paragraph"/>
@@ -238,6 +164,48 @@
     <xs:attributeGroup ref="class"/>
     <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
   </xs:complexType>
+
+  <xs:complexType name="text-decoration" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="commonInlineElements"/>
+      <xs:element ref="embed"/>
+      <xs:element ref="embed-inline"/>
+    </xs:choice>
+    <xs:attributeGroup ref="class"/>
+    <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="embed">
+    <xs:attributeGroup ref="align"/>
+    <xs:attributeGroup ref="class"/>
+    <xs:attribute name="node_id" type="xs:integer"/>
+    <xs:attribute name="object_id" type="xs:integer"/>
+    <xs:attribute name="object_remote_id" type="xs:string"/>
+    <xs:attribute name="show_path"/>
+    <xs:attribute name="size" type="xs:string"/>
+    <xs:attributeGroup ref="target"/>
+    <xs:attribute name="view" type="xs:string"/>
+    <xs:attributeGroup ref="xhtml:id"/>
+    <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:group name="commonInlineElements">
+    <xs:choice>
+      <xs:element ref="custom"/>
+      <xs:element ref="strong"/>
+      <xs:element ref="emphasize"/>
+      <xs:element ref="link"/>
+      <xs:element ref="anchor"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:group name="blockElements">
+    <xs:choice>
+      <xs:element ref="section"/>
+      <xs:element ref="paragraph"/>
+      <xs:element ref="header"/>
+    </xs:choice>
+  </xs:group>
 
   <!-- Attributes -->
   <xs:attributeGroup name="align">
