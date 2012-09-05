@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:xhtml="http://ez.no/namespaces/ezpublish3/xhtml/" xmlns:custom="http://ez.no/namespaces/ezpublish3/custom/">
   <xs:import namespace="http://ez.no/namespaces/ezpublish3/xhtml/" schemaLocation="xhtml.xsd"/>
+
   <xs:element name="section">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -8,146 +9,49 @@
       </xs:choice>
     </xs:complexType>
   </xs:element>
-  <xs:element name="header">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:group ref="commonInlineElements"/>
-      </xs:choice>
-      <xs:attributeGroup ref="align"/>
-      <xs:attribute name="anchor_name" type="xs:string"/>
-      <xs:attribute name="level" type="xs:integer"/>
-      <xs:attributeGroup ref="class"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="strong" type="text-decoration"/>
-  <xs:element name="emphasize" type="text-decoration"/>
-  <xs:element name="paragraph">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:group ref="commonInlineElements"/>
-        <xs:element ref="embed"/>
-        <xs:element ref="embed-inline"/>
-        <xs:element ref="table"/>
-        <xs:element ref="line"/>
-        <xs:element ref="literal"/>
-        <xs:element ref="ol"/>
-        <xs:element ref="ul"/>
-        <xs:element ref="header"/>
-      </xs:choice>
-      <xs:attributeGroup ref="align"/>
-      <xs:attributeGroup ref="class"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="anchor">
-    <xs:complexType>
-      <xs:attribute name="name" use="required" type="xs:string"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="line">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:group ref="commonInlineElements"/>
-        <xs:element ref="embed"/>
-        <xs:element ref="embed-inline"/>
-        <xs:element ref="literal"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="literal">
-    <xs:complexType mixed="true">
-      <xs:sequence>
-        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
-      </xs:sequence>
-      <xs:attributeGroup ref="class"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ol" type="list"/>
-  <xs:element name="ul" type="list"/>
-  <xs:element name="li">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="paragraph"/>
-      </xs:sequence>
-      <xs:attributeGroup ref="class"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="custom">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:group ref="commonInlineElements"/>
-        <xs:group ref="blockElements"/>
-      </xs:choice>
-      <xs:attributeGroup ref="align"/>
-      <xs:attribute name="name" use="required" type="xs:string"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="link">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="custom"/>
-        <xs:element ref="strong"/>
-        <xs:element ref="emphasize"/>
-        <xs:element ref="embed"/>
-        <xs:element ref="embed-inline"/>
-      </xs:choice>
-      <xs:attribute name="anchor_name"/>
-      <xs:attributeGroup ref="class"/>
-      <xs:attribute name="node_id" type="xs:integer"/>
-      <xs:attribute name="object_id" type="xs:integer"/>
-      <xs:attribute name="object_remote_id" type="xs:string"/>
-      <xs:attribute name="show_path"/>
-      <xs:attributeGroup ref="target"/>
-      <xs:attribute name="url_id" type="xs:integer"/>
-      <xs:attribute name="view"/>
-      <xs:attributeGroup ref="xhtml:id"/>
-      <xs:attribute ref="xhtml:title"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
 
-  <xs:element name="embed" type="embed"/>
+  <!-- types -->
+  <xs:complexType name="paragraph" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="commonInlineElements"/>
+      <xs:element name="embed" type="embed"/>
+      <xs:element name="embed-inline" type="embed"/>
+      <xs:element name="table" type="table"/>
+      <xs:element name="literal" type="literal"/>
+      <xs:element name="ol" type="list"/>
+      <xs:element name="ul" type="list"/>
+      <xs:element name="header" type="header"/>
+      <xs:element name="line">
+        <xs:complexType mixed="true">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="commonInlineElements"/>
+            <xs:element name="embed" type="embed"/>
+            <xs:element name="embed-inline" type="embed"/>
+            <xs:element name="literal" type="literal"/>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+    <xs:attributeGroup ref="align"/>
+    <xs:attributeGroup ref="class"/>
+  </xs:complexType>
 
-  <xs:element name="embed-inline" type="embed"/>
+  <xs:complexType name="header" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="commonInlineElements"/>
+    </xs:choice>
+    <xs:attributeGroup ref="align"/>
+    <xs:attribute name="anchor_name" type="xs:string"/>
+    <xs:attribute name="level" type="xs:integer"/>
+    <xs:attributeGroup ref="class"/>
+    <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+  </xs:complexType>
 
-  <!-- Table elements -->
-  <xs:element name="table">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="tr"/>
-      </xs:sequence>
-      <xs:attributeGroup ref="align"/>
-      <xs:attribute name="border" type="xs:string"/>
-      <xs:attributeGroup ref="class"/>
-      <xs:attribute name="width"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="tr">
-    <xs:complexType>
-      <xs:choice maxOccurs="unbounded">
-        <xs:element ref="th"/>
-        <xs:element ref="td"/>
-      </xs:choice>
-      <xs:attributeGroup ref="class"/>
-      <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="th" type="cell"/>
-
-  <xs:element name="td" type="cell"/>
-
-  <!-- Custom types -->
   <xs:complexType name="cell" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="paragraph"/>
+      <xs:element name="paragraph" type="paragraph"/>
       <xs:element ref="section"/>
-      <xs:element ref="table"/>
+      <xs:element name="table" type="table"/>
     </xs:choice>
     <xs:attributeGroup ref="align"/>
     <xs:attributeGroup ref="class"/>
@@ -159,7 +63,14 @@
 
   <xs:complexType name="list">
     <xs:sequence>
-      <xs:element minOccurs="1" maxOccurs="unbounded" ref="li"/>
+      <xs:element minOccurs="1" maxOccurs="unbounded" name="li">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="paragraph" type="paragraph"/>
+          </xs:sequence>
+          <xs:attributeGroup ref="class"/>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
     <xs:attributeGroup ref="class"/>
     <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
@@ -168,8 +79,8 @@
   <xs:complexType name="text-decoration" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:group ref="commonInlineElements"/>
-      <xs:element ref="embed"/>
-      <xs:element ref="embed-inline"/>
+      <xs:element name="embed" type="embed"/>
+      <xs:element name="embed-inline" type="embed"/>
     </xs:choice>
     <xs:attributeGroup ref="class"/>
     <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
@@ -189,21 +100,86 @@
     <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
   </xs:complexType>
 
+  <xs:complexType name="literal" mixed="true">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="class"/>
+    <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="table">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="tr">
+        <xs:complexType>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element name="th" type="cell"/>
+            <xs:element name="td" type="cell"/>
+          </xs:choice>
+          <xs:attributeGroup ref="class"/>
+          <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="align"/>
+    <xs:attribute name="border" type="xs:string"/>
+    <xs:attributeGroup ref="class"/>
+    <xs:attribute name="width"/>
+    <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="custom" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="commonInlineElements"/>
+      <xs:group ref="blockElements"/>
+    </xs:choice>
+    <xs:attributeGroup ref="align"/>
+    <xs:attribute name="name" use="required" type="xs:string"/>
+    <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+  </xs:complexType>
+
   <xs:group name="commonInlineElements">
     <xs:choice>
-      <xs:element ref="custom"/>
-      <xs:element ref="strong"/>
-      <xs:element ref="emphasize"/>
-      <xs:element ref="link"/>
-      <xs:element ref="anchor"/>
+      <xs:element name="custom" type="custom"/>
+      <xs:element name="strong" type="text-decoration"/>
+      <xs:element name="emphasize" type="text-decoration"/>
+      <xs:element name="link">
+        <xs:complexType mixed="true">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="custom" type="custom"/>
+            <xs:element name="strong" type="text-decoration"/>
+            <xs:element name="emphasize" type="text-decoration"/>
+            <xs:element name="embed" type="embed"/>
+            <xs:element name="embed-inline" type="embed"/>
+          </xs:choice>
+          <xs:attribute name="anchor_name"/>
+          <xs:attributeGroup ref="class"/>
+          <xs:attribute name="node_id" type="xs:integer"/>
+          <xs:attribute name="object_id" type="xs:integer"/>
+          <xs:attribute name="object_remote_id" type="xs:string"/>
+          <xs:attribute name="show_path"/>
+          <xs:attributeGroup ref="target"/>
+          <xs:attribute name="url_id" type="xs:integer"/>
+          <xs:attribute name="view"/>
+          <xs:attributeGroup ref="xhtml:id"/>
+          <xs:attribute ref="xhtml:title"/>
+          <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="anchor">
+        <xs:complexType>
+          <xs:attribute name="name" use="required" type="xs:string"/>
+          <xs:anyAttribute namespace="http://ez.no/namespaces/ezpublish3/custom/" processContents="skip"/>
+        </xs:complexType>
+      </xs:element>
     </xs:choice>
   </xs:group>
 
   <xs:group name="blockElements">
     <xs:choice>
       <xs:element ref="section"/>
-      <xs:element ref="paragraph"/>
-      <xs:element ref="header"/>
+      <xs:element name="paragraph" type="paragraph"/>
+      <xs:element name="header" type="header"/>
     </xs:choice>
   </xs:group>
 
